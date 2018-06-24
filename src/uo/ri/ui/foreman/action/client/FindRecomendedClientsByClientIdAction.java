@@ -21,6 +21,8 @@ public class FindRecomendedClientsByClientIdAction implements Action {
 
 		List<ClientDto> clients = fs.findRecomendedClientsByClienteId(id);
 		Console.println("\nListado de clientes recomendados\n");
+		Console.println("Formato: id, dni, nombre, apellidos, ciudad, calle, "
+				+ "codigo postal, email, telefono");
 		for (ClientDto c : clients) {
 			Printer.printClient(c);
 		}

@@ -22,7 +22,7 @@ public class ReparacionesNoFacturadasUnClienteAction implements Action {
 
 		List<BreakdownDto> reps = cs.findBreakdownByClient(dni);
 
-		if (reps.size() == 0) {
+		if (reps == null || reps.size() == 0) {
 			Console.printf("No tiene reparaciones pendientes\n");
 			return;
 		}

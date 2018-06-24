@@ -22,6 +22,8 @@ public class FindClientByIdAction implements Action {
 		}
 
 		Console.println("\nDetalles del cliente\n");
+		Console.println("Formato: id, dni, nombre, apellidos, ciudad, calle, "
+				+ "codigo postal, email, telefono");
 		Printer.printClient(c);
 	}
 

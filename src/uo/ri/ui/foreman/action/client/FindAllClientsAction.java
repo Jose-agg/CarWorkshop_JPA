@@ -19,6 +19,8 @@ public class FindAllClientsAction implements Action {
 		List<ClientDto> clients = fs.findAllClients();
 
 		Console.println("\nListado de clientes\n");
+		Console.println("Formato: id, dni, nombre, apellidos, ciudad, calle, "
+				+ "codigo postal, email, telefono");
 		for (ClientDto c : clients) {
 			Printer.printClient(c);
 		}

@@ -61,9 +61,9 @@ public class Printer {
 
 		for (VoucherSummary v : vouchers) {
 			Console.printf(
-					"\tDNI: %s, \tNOMBRE: %s, \tBONOS EMITIDOS: %d, "
-							+ "\tIMPORTE TOTAL: %.2f, \tTOTAL CONSUMIDO: %.2f, "
-							+ "\tTOTAL DISPONIBLE: %.2f \n",
+					"\nDNI: %s, \nNOMBRE: %s, \nBONOS EMITIDOS: %d, "
+							+ "\nIMPORTE TOTAL: %.2f, \nTOTAL CONSUMIDO: %.2f, "
+							+ "\nTOTAL DISPONIBLE: %.2f \n------------------",
 					v.dni, v.name, v.emitted, v.totalAmount, v.consumed,
 					v.available);
 		}
@@ -115,8 +115,6 @@ public class Printer {
 	}
 
 	public static void printClient(ClientDto c) {
-		Console.println("Formato: id, dni, nombre, apellidos, ciudad, calle, "
-				+ "codigo postal, email, telefono");
 		Console.printf(
 				"\t%d, %-10.10s, %-25.25s, %-25.25s, %-25.25s, %-25.25s,"
 						+ " %-25.25s, %-25.25s, %-25.25s\n",
