@@ -6,7 +6,7 @@ package uo.ri.business.impl;
  * @author José Antonio García García
  *
  */
-public interface ComandExecutorFactory {
+public interface CommandExecutorFactory {
 
 	CommandExecutor forExecutor();
 

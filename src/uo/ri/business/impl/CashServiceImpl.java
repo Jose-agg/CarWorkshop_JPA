@@ -43,9 +43,9 @@ public class CashServiceImpl implements CashService {
 	}
 
 	@Override
-	public void liquidateInvoice(Long idFactura, Map<Long, Double> cargos)
+	public InvoiceDto liquidateInvoice(Long idFactura, Map<Long, Double> cargos)
 			throws BusinessException {
-		executor.execute(new LiquidateInvoice(idFactura, cargos));
+		return executor.execute(new LiquidateInvoice(idFactura, cargos));
 
 	}
 
@@ -75,6 +75,28 @@ public class CashServiceImpl implements CashService {
 	public List<PaymentMeanDto> findPaymentMethodsByClientId(Long id)
 			throws BusinessException {
 		return executor.execute(new FindPaymentMethodsByClientId(id));
+	}
+
+	@Override
+	public void addCardPaymentMean(CardDto card) throws BusinessException {
+		addCardPaymentMethod(card);
+	}
+
+	@Override
+	public void addVoucherPaymentMean(VoucherDto voucher)
+			throws BusinessException {
+		addVoucherPaymentMethod(voucher);
+	}
+
+	@Override
+	public void deletePaymentMean(Long id) throws BusinessException {
+		deletePaymentMethod(id);
+	}
+
+	@Override
+	public InvoiceDto settleInvoice(Long idFactura, Map<Long, Double> mapa)
+			throws BusinessException {
+		return liquidateInvoice(idFactura, mapa);
 	}
 
 }

@@ -54,11 +54,6 @@
 		</query>
 	</named-query>
 	
-	<named-query name = "Cliente.findRecomendedBy">
-		<query>SELECT c FROM Cliente c WHERE 
-		c.recomendacionRecibida.recomendador.id = ?1</query>
-	</named-query>
-	
 	<!-- Factura queries -->
 	<named-query name="Factura.findByNumber">
 		<query>

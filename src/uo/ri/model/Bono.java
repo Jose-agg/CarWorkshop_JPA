@@ -10,16 +10,17 @@ import javax.persistence.Table;
 import uo.ri.util.exception.BusinessException;
 
 @Entity
-@Table(name="TBonos")
+@Table(name = "TBonos")
 @DiscriminatorValue("TBonos")
 public class Bono extends MedioPago {
 
 	protected double disponible = 0.0;
 	private String descripcion = "";
-	@Column(unique=true) private String codigo;
+	@Column(unique = true)
+	private String codigo;
 
-	Bono(){};
-
+	Bono() {
+	};
 
 	public Bono(String codigo) {
 		super();
@@ -28,34 +29,34 @@ public class Bono extends MedioPago {
 
 	public Bono(String string, double d) {
 		this(string);
-		this.disponible=d;
+		this.disponible = d;
 	}
-
 
 	public Bono(String code, String string, double i) {
 		this(code);
-		this.descripcion=string;
-		this.disponible=i;
+		this.descripcion = string;
+		this.disponible = i;
 	}
 
-
-	public double getDisponible() {
+	public Double getDisponible() {
 		return disponible;
 	}
 
 	public void setDisponible(double disponible) {
 		this.disponible = disponible;
 	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
 	public String getCodigo() {
 		return codigo;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -64,7 +65,6 @@ public class Bono extends MedioPago {
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -83,21 +83,20 @@ public class Bono extends MedioPago {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Bono [disponible=" + disponible + ", descripcion=" + descripcion + ", codigo=" + codigo + "]";
+		return "Bono [disponible=" + disponible + ", descripcion=" + descripcion
+				+ ", codigo=" + codigo + "]";
 	}
-
 
 	@Override
 	public void pagar(double cantidad) throws BusinessException {
-		if(disponible>=cantidad) {
-			acumulado+=cantidad;
-			disponible-=cantidad;
-		}
-		else {
-			throw new BusinessException("Error: Cargo superior al saldo disponible del bono");
+		if (disponible >= cantidad) {
+			acumulado += cantidad;
+			disponible -= cantidad;
+		} else {
+			throw new BusinessException(
+					"Error: Cargo superior al saldo disponible del bono");
 		}
 
 	}
@@ -110,17 +109,17 @@ public class Bono extends MedioPago {
 	 * @return El nuevo código generado
 	 */
 	public static String generarCodigo(List<MedioPago> medios) {
-		String cod="B1000";
-		for(MedioPago mp : medios) {
-			if(mp instanceof Bono) {
-				if(((Bono) mp).getCodigo().compareTo(cod)>0) {
-					cod=((Bono) mp).getCodigo();
+		String cod = "B1000";
+		for (MedioPago mp : medios) {
+			if (mp instanceof Bono) {
+				if (((Bono) mp).getCodigo().compareTo(cod) > 0) {
+					cod = ((Bono) mp).getCodigo();
 				}
 			}
 		}
-		String[] parts=cod.split("B");
+		String[] parts = cod.split("B");
 		int parte = Integer.parseInt(parts[1]);
-		return "B"+(parte+10);
+		return "B" + (parte + 10);
 	}
 
 }

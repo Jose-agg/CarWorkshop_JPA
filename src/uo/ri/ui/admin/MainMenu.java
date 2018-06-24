@@ -1,7 +1,7 @@
 package uo.ri.ui.admin;
 
 import alb.util.menu.BaseMenu;
-import uo.ri.business.impl.BusinessFactory;
+import uo.ri.business.impl.BusinessServiceFactory;
 import uo.ri.conf.Factory;
 import uo.ri.persistence.jpa.JpaRepositoryFactory;
 import uo.ri.persistence.jpa.executor.JpaExecutorFactory;
@@ -9,13 +9,11 @@ import uo.ri.persistence.jpa.executor.JpaExecutorFactory;
 public class MainMenu extends BaseMenu {
 
 	public MainMenu() {
-		menuOptions = new Object[][] { 
-			{ "Administrador", null },
-			{ "Gestión de mecánicos", 			MecanicosMenu.class }, 
-			{ "Gestión de repuestos", 			RepuestosMenu.class },
-			{ "Gestión de tipos de vehículo", 	TiposVehiculoMenu.class },
-			{ "Generar bonos",					BonosMenu.class},
-		};
+		menuOptions = new Object[][] { { "Administrador", null },
+				{ "Gestión de mecánicos", MecanicosMenu.class },
+				{ "Gestión de repuestos", RepuestosMenu.class },
+				{ "Gestión de tipos de vehículo", TiposVehiculoMenu.class },
+				{ "Generar bonos", BonosMenu.class }, };
 	}
 
 	public static void main(String[] args) {
@@ -27,10 +25,10 @@ public class MainMenu extends BaseMenu {
 	 * @return this
 	 */
 	private MainMenu configure() {
-		Factory.service = new BusinessFactory();
+		Factory.service = new BusinessServiceFactory();
 		Factory.repository = new JpaRepositoryFactory();
 		Factory.executor = new JpaExecutorFactory();
-		
+
 		return this;
 	}
 

@@ -36,9 +36,7 @@ public class ClienteJpaRepository extends BaseRepository<Cliente>
 
 	@Override
 	public List<Cliente> findRecomendedBy(Long id) {
-		return Jpa.getManager()
-				.createNamedQuery("Cliente.findRecomendedBy", Cliente.class)
-				.setParameter(1, id).getResultList();
+		return null;
 	}
 
 }

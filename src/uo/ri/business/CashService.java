@@ -55,9 +55,10 @@ public interface CashService {
 	 * 
 	 * @param idFactura Identificador de una factura
 	 * @param cargos Lista de medios de pago seleccionados por el cliente
+	 * @return los datos de la factura liquidada.
 	 * @throws BusinessException
 	 */
-	public void liquidateInvoice(Long idFactura, Map<Long, Double> cargos)
+	public InvoiceDto liquidateInvoice(Long idFactura, Map<Long, Double> cargos)
 			throws BusinessException;
 
 	/**
@@ -104,6 +105,16 @@ public interface CashService {
 	 * @throws BusinessException
 	 */
 	public List<PaymentMeanDto> findPaymentMethodsByClientId(Long id)
+			throws BusinessException;
+
+	public void addCardPaymentMean(CardDto card) throws BusinessException;
+
+	public void addVoucherPaymentMean(VoucherDto voucher)
+			throws BusinessException;
+
+	public void deletePaymentMean(Long id) throws BusinessException;
+
+	public InvoiceDto settleInvoice(Long idFactura, Map<Long, Double> mapa)
 			throws BusinessException;
 
 }
