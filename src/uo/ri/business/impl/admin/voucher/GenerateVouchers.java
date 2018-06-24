@@ -3,7 +3,6 @@ package uo.ri.business.impl.admin.voucher;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import alb.util.random.Random;
 import uo.ri.business.impl.Command;
 import uo.ri.business.repository.ClienteRepository;
 import uo.ri.business.repository.FacturaRepository;
@@ -14,6 +13,7 @@ import uo.ri.model.Averia;
 import uo.ri.model.Bono;
 import uo.ri.model.Cliente;
 import uo.ri.model.Factura;
+import uo.ri.model.MedioPago;
 import uo.ri.model.Recomendacion;
 import uo.ri.util.exception.BusinessException;
 
@@ -123,10 +123,22 @@ public class GenerateVouchers implements Command<Integer> {
 	 */
 	private void crearBono(Cliente cliente, double disponible,
 			String descripcion) {
-		Bono bono = new Bono(Random.string(5), disponible);
-		bono.setDescripcion(descripcion);
+		Bono bono = new Bono(generarCodigoBono(), descripcion, disponible);
 		Association.Pagar.link(cliente, bono);
 
 		rmp.add(bono);
+	}
+
+	/**
+	 * Metodo auxiliar para la generacion del codigo del bono
+	 * 
+	 * @return
+	 */
+	private String generarCodigoBono() {
+		String max = rmp.findAll().stream().filter(m -> m instanceof Bono)
+				.map((MedioPago m) -> ((Bono) m).getCodigo())
+				.max((a, b) -> a.compareTo(b)).orElse("B0000");
+		max = max.substring(1);
+		return "B" + (Integer.parseInt(max) + 10);
 	}
 }

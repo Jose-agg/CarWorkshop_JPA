@@ -32,9 +32,9 @@ public class Bono extends MedioPago {
 		this.disponible = d;
 	}
 
-	public Bono(String code, String string, double i) {
+	public Bono(String code, String descripcion, double i) {
 		this(code);
-		this.descripcion = string;
+		this.descripcion = descripcion;
 		this.disponible = i;
 	}
 
