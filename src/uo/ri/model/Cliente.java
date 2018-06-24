@@ -244,4 +244,9 @@ public class Cliente {
 		return 0;
 	}
 
+	public Metalico getMetalico() {
+		return (Metalico) mediosPago.stream().filter(x -> x instanceof Metalico)
+				.findFirst().orElse(null);
+	}
+
 }

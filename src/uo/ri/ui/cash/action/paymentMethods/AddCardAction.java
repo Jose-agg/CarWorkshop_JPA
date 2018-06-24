@@ -29,7 +29,7 @@ public class AddCardAction implements Action {
 		CashService cs = Factory.service.forCash();
 		cs.addCardPaymentMethod(c);
 
-		Console.println("Aañadida tarjeta de crédito ");
+		Console.println("Añadida tarjeta de crédito ");
 
 	}
 

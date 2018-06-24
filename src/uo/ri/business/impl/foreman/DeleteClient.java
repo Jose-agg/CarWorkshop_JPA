@@ -6,7 +6,7 @@ import uo.ri.business.repository.MedioPagoRepository;
 import uo.ri.business.repository.RecomendacionRepository;
 import uo.ri.conf.Factory;
 import uo.ri.model.Cliente;
-import uo.ri.model.MedioPago;
+import uo.ri.model.Metalico;
 import uo.ri.model.Recomendacion;
 import uo.ri.util.exception.BusinessException;
 import uo.ri.util.exception.Check;
@@ -42,24 +42,15 @@ public class DeleteClient implements Command<Void> {
 		Check.isTrue(c.getVehiculos().size() == 0,
 				"El cliente no puede ser eliminado al tener vehículos registrados");
 
-		eleminarMediosPago(c);
 		eliminarRecomendacionesHechas(c);
 		eliminarRecomendacionRecibida(c);
+
+		Metalico m = c.getMetalico();
+		if (m != null)
+			rm.remove(m);
 		rc.remove(c);
 
 		return null;
-	}
-
-	/**
-	 * Metodo que elimina los medios de pago del cliente
-	 * 
-	 * @param cliente Cliente a buscar
-	 */
-	private void eleminarMediosPago(Cliente cliente) {
-		for (MedioPago m : cliente.getMediosPago()) {
-			rm.remove(m);
-			m.unlink();
-		}
 	}
 
 	/**
