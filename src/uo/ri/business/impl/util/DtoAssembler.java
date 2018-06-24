@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import uo.ri.business.dto.CardDto;
+import uo.ri.business.dto.CashDto;
 import uo.ri.business.dto.ClientDto;
 import uo.ri.business.dto.InvoiceDto;
 import uo.ri.business.dto.MechanicDto;
@@ -113,11 +114,11 @@ public class DtoAssembler {
 
 	private static PaymentMeanDto toDto(MedioPago mp) {
 		if (mp instanceof Bono) {
-			return toDto((Bono) mp);
+			return toDtoVoucher((Bono) mp);
 		} else if (mp instanceof TarjetaCredito) {
-			return toDto(mp);
+			return toDtoCard((TarjetaCredito) mp);
 		} else if (mp instanceof Metalico) {
-			return toDto(mp);
+			return toDtoCash((Metalico) mp);
 		} else {
 			throw new RuntimeException("Unexpected type of payment mean");
 		}
@@ -154,6 +155,38 @@ public class DtoAssembler {
 		dto.email = c.getEmail();
 		dto.phone = c.getPhone();
 
+		return dto;
+	}
+
+	// Los siguientes tres metodos estan porque, por alguna razon, el metodo
+	// toDto(MedioPago mp) entraba en un bucle infinito
+	private static VoucherDto toDtoVoucher(Bono b) {
+		VoucherDto dto = new VoucherDto();
+		dto.id = b.getId();
+		dto.clientId = b.getCliente().getId();
+		dto.accumulated = b.getAcumulado();
+		dto.code = b.getCodigo();
+		dto.description = b.getDescripcion();
+		dto.available = b.getDisponible();
+		return dto;
+	}
+
+	private static CardDto toDtoCard(TarjetaCredito tc) {
+		CardDto dto = new CardDto();
+		dto.id = tc.getId();
+		dto.clientId = tc.getCliente().getId();
+		dto.accumulated = tc.getAcumulado();
+		dto.cardNumber = tc.getNumero();
+		dto.cardExpiration = tc.getValidez();
+		dto.cardType = tc.getTipo();
+		return dto;
+	}
+
+	private static CashDto toDtoCash(Metalico m) {
+		CashDto dto = new CashDto();
+		dto.id = m.getId();
+		dto.clientId = m.getCliente().getId();
+		dto.accumulated = m.getAcumulado();
 		return dto;
 	}
 
