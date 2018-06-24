@@ -48,8 +48,7 @@ public class AddClient implements Command<Void> {
 
 		if (recomenderId != null) {
 			Cliente recom = rc.findById(recomenderId);
-			Check.isNotNull(recom,
-					"El id del recomendador no coincide con ningun cliente");
+			Check.isNotNull(recom, "No existe el cliente recomendador");
 			recomendacion = new Recomendacion(rc.findById(recomenderId), c);
 			rr.add(recomendacion);
 		}
@@ -69,6 +68,6 @@ public class AddClient implements Command<Void> {
 	 */
 	private void checkNotRepeated(String dni) throws BusinessException {
 		Cliente c = rc.findByDni(dni);
-		Check.isNull(c, "Este dni ya se encuentra en el sistema");
+		Check.isNull(c, "Ya existe un cliente con ese dni");
 	}
 }

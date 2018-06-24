@@ -7,7 +7,6 @@ import uo.ri.business.repository.ClienteRepository;
 import uo.ri.conf.Factory;
 import uo.ri.model.Cliente;
 import uo.ri.util.exception.BusinessException;
-import uo.ri.util.exception.Check;
 
 /**
  * Clase encargada de buscar un cliente a partir de su identificador
@@ -30,8 +29,10 @@ public class FindClientById implements Command<ClientDto> {
 	@Override
 	public ClientDto execute() throws BusinessException {
 		Cliente c = rc.findById(id);
-		Check.isNull(c, "No existe un cliente con este id");
-		return DtoAssembler.toDto(c);
+		if (c == null)
+			return null;
+		else
+			return DtoAssembler.toDto(c);
 	}
 
 }

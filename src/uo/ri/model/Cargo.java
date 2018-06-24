@@ -1,7 +1,5 @@
 package uo.ri.model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,82 +12,74 @@ import uo.ri.model.types.FacturaStatus;
 import uo.ri.util.exception.BusinessException;
 
 @Entity
-@Table(name="TCargos",
-uniqueConstraints= {
-		@UniqueConstraint(columnNames="FACTURA_ID, MEDIOPAGO_ID")
-})
+@Table(name = "TCargos", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "FACTURA_ID, MEDIOPAGO_ID") })
 public class Cargo {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 
-	@ManyToOne Factura factura;
-	@ManyToOne MedioPago medioPago;
+	@ManyToOne
+	Factura factura;
+	@ManyToOne
+	MedioPago medioPago;
 	private double importe = 0.0;
 
-	Cargo(){};
+	Cargo() {
+	};
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public Cargo(Factura factura, MedioPago medioPago) {
 		super();
-		Association.Cargar.link(factura,this,medioPago);
-	}
-
-	public Cargo(Factura factura, MedioPago medioPago, double importe) throws uo.ri.util.exception.BusinessException {	
-		if(medioPago instanceof Bono && ((Bono) medioPago).getDisponible()<importe) {
-			throw new BusinessException("Bono con disponible insuficiente");
-		}
-		if(medioPago instanceof TarjetaCredito && ((TarjetaCredito) medioPago).getValidez().getTime() < 
-				new Date().getTime()) {
-			throw new BusinessException("Tarjeta de crédito con fecha caducada");
-		}
-		medioPago.acumulado+=importe;
-		if(medioPago instanceof Bono) {
-			((Bono) medioPago).disponible-=importe;
-		}
-		this.importe=importe;
 		Association.Cargar.link(factura, this, medioPago);
-
 	}
 
+	public Cargo(Factura factura, MedioPago medioPago, double importe)
+			throws BusinessException {
+		if (medioPago instanceof TarjetaCredito) {
+			TarjetaCredito tc = (TarjetaCredito) medioPago;
+			if (!tc.isValidNow())
+				throw new BusinessException("La tarjeta está caducada");
+			tc.pagar(importe);
+		} else if (medioPago instanceof Bono) {
+			Bono b = (Bono) medioPago;
+			if (importe > b.getDisponible())
+				throw new BusinessException(
+						"No hay saldo suficiente en el bono");
+			b.pagar(importe);
+		} else
+			medioPago.acumular(importe);
 
+		this.importe = importe;
+		Association.Cargar.link(factura, this, medioPago);
+	}
 
 	public Factura getFactura() {
 		return factura;
 	}
 
-
-
 	void _setFactura(Factura factura) {
 		this.factura = factura;
 	}
-
-
 
 	public MedioPago getMedioPago() {
 		return medioPago;
 	}
 
-
-
 	void _setMedioPago(MedioPago medioPago) {
 		this.medioPago = medioPago;
 	}
-
-
 
 	public double getImporte() {
 		return importe;
 	}
 
-
-
 	public void setImporte(double importe) {
 		this.importe = importe;
 	}
-
 
 	/**
 	 * Anula (retrocede) este cargo de la factura y el medio de pago
@@ -99,13 +89,11 @@ public class Cargo {
 	 * @throws BusinessException
 	 */
 	public void rewind() throws uo.ri.util.exception.BusinessException {
-		if(factura.getStatus()!=FacturaStatus.ABONADA) {
-			medioPago.acumulado-=importe;
+		if (factura.getStatus() != FacturaStatus.ABONADA) {
+			medioPago.acumulado -= importe;
 			Association.Cargar.unlink(this);
 		}
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -116,8 +104,6 @@ public class Cargo {
 				+ ((medioPago == null) ? 0 : medioPago.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -140,8 +126,6 @@ public class Cargo {
 			return false;
 		return true;
 	}
-
-
 
 	@Override
 	public String toString() {

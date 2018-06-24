@@ -7,7 +7,6 @@ import uo.ri.business.repository.FacturaRepository;
 import uo.ri.conf.Factory;
 import uo.ri.model.Factura;
 import uo.ri.util.exception.BusinessException;
-import uo.ri.util.exception.Check;
 
 /**
  * Clase encargada de buscar una factura a partir de su numero
@@ -29,7 +28,8 @@ public class FindInvoiceByNumber implements Command<InvoiceDto> {
 	public InvoiceDto execute() throws BusinessException {
 		FacturaRepository rf = Factory.repository.forFactura();
 		Factura factura = rf.findByNumber(numFactura);
-		Check.isNotNull(factura, "Esta factura no existe");
+		if (factura == null)
+			return null;
 		return DtoAssembler.toDto(factura);
 
 	}

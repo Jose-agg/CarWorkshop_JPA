@@ -13,7 +13,6 @@ import uo.ri.model.Cargo;
 import uo.ri.model.Factura;
 import uo.ri.model.MedioPago;
 import uo.ri.util.exception.BusinessException;
-import uo.ri.util.exception.Check;
 
 /**
  * Clase que liquida una factura con los medios de pago introducidos por el
@@ -42,8 +41,10 @@ public class LiquidateInvoice implements Command<InvoiceDto> {
 		rf = Factory.repository.forFactura();
 		this.factura = rf.findById(idFactura);
 
-		Check.isNull(factura, "No existe un factura con este id");
-		Check.isTrue(factura.isSettled(), "Esta factura ya ha sido abonada");
+		if (factura == null)
+			throw new BusinessException("No existe la factura");
+		else if (factura.isSettled())
+			throw new BusinessException("Ya está abonada");
 
 		realizarCargos();
 		factura.settle();

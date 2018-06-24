@@ -89,4 +89,8 @@ public abstract class MedioPago {
 
 	}
 
+	public void acumular(double importe) {
+		this.acumulado += importe;
+	}
+
 }

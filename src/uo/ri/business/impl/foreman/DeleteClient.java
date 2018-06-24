@@ -38,9 +38,9 @@ public class DeleteClient implements Command<Void> {
 		rm = Factory.repository.forMedioPago();
 
 		Cliente c = rc.findById(idCliente);
-		Check.isNotNull(c, "Este cliente no existe");
-		Check.isTrue(c.getVehiculos().size() == 0, "El cliente no puede ser"
-				+ " eliminado porque tiene vehículos registrados");
+		Check.isNotNull(c, "El cliente no existe");
+		Check.isTrue(c.getVehiculos().size() == 0,
+				"El cliente no puede ser eliminado al tener vehículos registrados");
 
 		eleminarMediosPago(c);
 		eliminarRecomendacionesHechas(c);

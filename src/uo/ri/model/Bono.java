@@ -91,13 +91,10 @@ public class Bono extends MedioPago {
 
 	@Override
 	public void pagar(double cantidad) throws BusinessException {
-		if (disponible >= cantidad) {
-			acumulado += cantidad;
-			disponible -= cantidad;
-		} else {
-			throw new BusinessException(
-					"Error: Cargo superior al saldo disponible del bono");
-		}
+		if (cantidad > disponible)
+			throw new BusinessException("No hay suficiente dinero disponible");
+		disponible -= cantidad;
+		acumulado += cantidad;
 
 	}
 
