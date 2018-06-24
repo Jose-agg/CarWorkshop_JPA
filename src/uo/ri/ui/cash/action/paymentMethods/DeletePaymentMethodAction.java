@@ -6,9 +6,9 @@ import uo.ri.business.CashService;
 import uo.ri.conf.Factory;
 
 /**
- * Interacción con el usuario para la acción de eliminar un medio de pago
- * de la base de datos
- * @author yeahb
+ * Interacción con el usuario para eliminar un medio de pago
+ * 
+ * @author José Antonio García García
  *
  */
 public class DeletePaymentMethodAction implements Action {

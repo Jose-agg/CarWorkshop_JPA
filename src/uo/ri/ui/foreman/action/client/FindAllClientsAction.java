@@ -10,6 +10,13 @@ import uo.ri.conf.Factory;
 import uo.ri.ui.util.Printer;
 import uo.ri.util.exception.BusinessException;
 
+/**
+ * Interacción con el usuario para listar los datos de todos los cliente del 
+ * sistema
+ * 
+ * @author José Antonio García García
+ *
+ */
 public class FindAllClientsAction implements Action {
 
 	@Override

@@ -6,10 +6,13 @@ import uo.ri.business.AdminService;
 import uo.ri.conf.Factory;
 
 /**
- * Representa la acción en la UI a realizar para generar automáticamente bonos
- * para los clientes del taller y mostrar por pantalla el número generado
+ * Interacción con el usuario para la generacion de bonos si se cumplen alguna
+ * de estas tres reglas:
+ *  - Bonos por cada 3 recomendaciones.
+ *  - Bonos por cada 3 averias.
+ *  - Bonos por facturas superiores a 500€
  * 
- * @author Guille
+ * @author José Antonio García García
  *
  */
 public class GenerateVouchersAction implements Action {

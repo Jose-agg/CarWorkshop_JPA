@@ -13,30 +13,34 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="TIntervenciones",
-uniqueConstraints= {
-		@UniqueConstraint(columnNames="AVERIA_ID, MECANICO_ID")
-})
+@Table(name = "TIntervenciones", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "AVERIA_ID, MECANICO_ID") })
 public class Intervencion {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 
-	@ManyToOne private Averia averia;
-	@ManyToOne private Mecanico mecanico;
+	@ManyToOne
+	private Averia averia;
+	@ManyToOne
+	private Mecanico mecanico;
 	private int minutos;
 
-	@OneToMany(mappedBy="intervencion") private Set<Sustitucion> sustituciones = new HashSet<>();
+	@OneToMany(mappedBy = "intervencion")
+	private Set<Sustitucion> sustituciones = new HashSet<>();
 
-	Intervencion(){};
+	Intervencion() {
+	};
 
-	public Intervencion(Mecanico mecanico,Averia averia) {
+	public Intervencion(Mecanico mecanico, Averia averia) {
 		super();
-		Association.Intervenir.link(averia,this,mecanico);
+		Association.Intervenir.link(averia, this, mecanico);
 	}
 
 	public Intervencion(Mecanico m, Averia a, int minutes) {
-		this(m,a);
-		this.minutos=minutes;
-		Association.Intervenir.link(a,this,m);
+		this(m, a);
+		this.minutos = minutes;
+		Association.Intervenir.link(a, this, m);
 	}
 
 	public Long getId() {
@@ -72,7 +76,8 @@ public class Intervencion {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((averia == null) ? 0 : averia.hashCode());
-		result = prime * result + ((mecanico == null) ? 0 : mecanico.hashCode());
+		result = prime * result
+				+ ((mecanico == null) ? 0 : mecanico.hashCode());
 		return result;
 	}
 
@@ -100,24 +105,24 @@ public class Intervencion {
 
 	@Override
 	public String toString() {
-		return "Intervencion [averia=" + averia + ", mecanico=" + mecanico + ", minutos=" + minutos + "]";
+		return "Intervencion [averia=" + averia + ", mecanico=" + mecanico
+				+ ", minutos=" + minutos + "]";
 	}
 
 	public Set<Sustitucion> getSustituciones() {
-		return new HashSet<> (sustituciones);
+		return new HashSet<>(sustituciones);
 	}
-
 
 	Set<Sustitucion> _getSustituciones() {
 		return sustituciones;
 	}
 
-
 	public double getImporte() {
-		double importe=0.0;
-		importe=importe+(getMinutos()/60.0)* getAveria().getVehiculo().getTipo().getPrecioHora();
-		for(Sustitucion sust: sustituciones) {
-			importe=importe+sust.getImporte();
+		double importe = 0.0;
+		importe = importe + (getMinutos() / 60.0)
+				* getAveria().getVehiculo().getTipo().getPrecioHora();
+		for (Sustitucion sust : sustituciones) {
+			importe = importe + sust.getImporte();
 		}
 		return importe;
 	}

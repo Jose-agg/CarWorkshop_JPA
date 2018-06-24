@@ -12,18 +12,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TMecanicos")
+@Table(name = "TMecanicos")
 public class Mecanico {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 
-	@Column(unique=true) private String dni;
+	@Column(unique = true)
+	private String dni;
 	private String apellidos;
 	private String nombre;
 
-	@OneToMany(mappedBy="mecanico") private Set<Averia> averias = new HashSet<>();
-	@OneToMany(mappedBy="mecanico") private Set<Intervencion> intervenciones = new HashSet<>();
+	@OneToMany(mappedBy = "mecanico")
+	private Set<Averia> averias = new HashSet<>();
+	@OneToMany(mappedBy = "mecanico")
+	private Set<Intervencion> intervenciones = new HashSet<>();
 
-	Mecanico(){};
+	Mecanico() {
+	};
 
 	public Long getId() {
 		return id;
@@ -33,33 +39,33 @@ public class Mecanico {
 		super();
 		this.dni = dni;
 	}
-	
+
 	public Mecanico(String dni, String nombre, String apellidos) {
 		this(dni);
-		this.nombre=nombre;
-		this.apellidos=apellidos;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
 	}
-	
+
 	public String getApellidos() {
 		return apellidos;
 	}
-	
+
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}
-	
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public String getDni() {
 		return dni;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -67,7 +73,7 @@ public class Mecanico {
 		result = prime * result + ((dni == null) ? 0 : dni.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,10 +90,11 @@ public class Mecanico {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Mecanico [dni=" + dni + ", apellidos=" + apellidos + ", nombre=" + nombre + "]";
+		return "Mecanico [dni=" + dni + ", apellidos=" + apellidos + ", nombre="
+				+ nombre + "]";
 	}
 
 	Set<Averia> _getAverias() {

@@ -10,10 +10,9 @@ import uo.ri.conf.Factory;
 import uo.ri.ui.util.Printer;
 
 /**
- * Interacción con el usuario que muestra un listado de todos los bonos 
- * de un cliente, pedido por consola. Además muestra la información
- * agregada de los bonos del cliente
- * @author yeahb
+ * Interacción con el usuario para mostrar los bonos disponibles de un cliente
+ * 
+ * @author José Antonio García García
  *
  */
 public class FindVouchersAction implements Action {

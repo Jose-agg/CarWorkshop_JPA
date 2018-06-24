@@ -10,9 +10,10 @@ import uo.ri.conf.Factory;
 import uo.ri.ui.util.Printer;
 
 /**
- * Interacción con el usuario que muestra un listado de todos los clientes,
- * con la información agregada de los bonos de cada uno
- * @author yeahb
+ * Interacción con el usuario para listar los bonos de cada cliente y datos 
+ * adicionales
+ * 
+ * @author José Antonio García García
  *
  */
 public class FindAggregatedVouchersAction implements Action {

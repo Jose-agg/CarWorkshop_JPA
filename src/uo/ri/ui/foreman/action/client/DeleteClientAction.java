@@ -6,6 +6,13 @@ import uo.ri.business.ForemanService;
 import uo.ri.conf.Factory;
 import uo.ri.util.exception.BusinessException;
 
+/**
+ * Interacción con el usuario para eliminar los datos de un cliente del 
+ * sistema
+ * 
+ * @author José Antonio García García
+ *
+ */
 public class DeleteClientAction implements Action {
 
 	@Override

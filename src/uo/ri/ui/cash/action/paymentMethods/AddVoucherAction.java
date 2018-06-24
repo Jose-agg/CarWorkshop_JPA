@@ -7,9 +7,9 @@ import uo.ri.business.dto.VoucherDto;
 import uo.ri.conf.Factory;
 
 /**
- * Interacción con el usuario para la acción de añadir un bono
- * a la base de datos
- * @author yeahb
+ * Interacción con el usuario para la creacion de un nuevo bono
+ * 
+ * @author José Antonio García García
  *
  */
 public class AddVoucherAction implements Action {

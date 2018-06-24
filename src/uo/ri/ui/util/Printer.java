@@ -13,6 +13,13 @@ import uo.ri.business.dto.PaymentMeanDto;
 import uo.ri.business.dto.VoucherDto;
 import uo.ri.business.dto.VoucherSummary;
 
+/**
+ * Clase auxiliar que busca extraer los datos que se muestre al usuario de las
+ * clases tanto como sea posible
+ * 
+ * @author José Antonio García García
+ *
+ */
 public class Printer {
 
 	public static void printInvoice(InvoiceDto invoice) {

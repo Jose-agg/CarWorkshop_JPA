@@ -10,5 +10,11 @@ import uo.ri.model.Mecanico;
  */
 public interface MecanicoRepository extends Repository<Mecanico> {
 
-	public Mecanico findByDni(String dni);
+	/**
+	 * Metodo que devuelve un mecanico a partir de su dni
+	 * 
+	 * @param dni DNI del mecanico a buscar
+	 * @return mecanico encontrado
+	 */
+	Mecanico findByDni(String dni);
 }

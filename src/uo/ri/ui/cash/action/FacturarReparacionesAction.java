@@ -11,6 +11,12 @@ import uo.ri.conf.Factory;
 import uo.ri.ui.util.Printer;
 import uo.ri.util.exception.BusinessException;
 
+/**
+ * Interacción con el usuario para la facturacion de averias
+ * 
+ * @author José Antonio García García
+ *
+ */
 public class FacturarReparacionesAction implements Action {
 
 	@Override

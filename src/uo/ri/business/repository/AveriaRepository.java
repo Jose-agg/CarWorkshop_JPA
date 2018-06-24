@@ -12,9 +12,29 @@ import uo.ri.model.Averia;
  */
 public interface AveriaRepository extends Repository<Averia> {
 
+	/**
+	 * Metodo que devuelve una lista de averias a partir de los identificadores
+	 * 
+	 * @param idsAveria Lista de identificadoresde averias
+	 * @return lista de averias
+	 */
 	List<Averia> findByIds(List<Long> idsAveria);
 
+	/**
+	 * Metodo que devuelve la lista de averias no facturas de un cliente a 
+	 * partir de su dni
+	 * 
+	 * @param dni DNI del cliente a buscar
+	 * @return lista de averias no facturadas
+	 */
 	List<Averia> findNoFacturadasByDni(String dni);
 
+	/**
+	 * Metodo que devuelve las averias de un cliente que no hayan sido 
+	 * utilizadas para la generacion de un bono
+	 * 
+	 * @param id Identificador del clientea buscar
+	 * @return lista de averias de dicho cliente
+	 */
 	List<Averia> findWithUnusedBono3ByClienteId(Long id);
 }

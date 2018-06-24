@@ -11,16 +11,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TTiposvehiculo")
+@Table(name = "TTiposvehiculo")
 public class TipoVehiculo {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 
 	private String nombre;
 	private double precioHora;
 
-	@OneToMany(mappedBy="tipo") private Set<Vehiculo> vehiculos = new HashSet<>();
+	@OneToMany(mappedBy = "tipo")
+	private Set<Vehiculo> vehiculos = new HashSet<>();
 
-	TipoVehiculo() {};
+	TipoVehiculo() {
+	};
 
 	public Long getId() {
 		return id;
@@ -33,7 +37,7 @@ public class TipoVehiculo {
 
 	public TipoVehiculo(String nombre, double precioHora) {
 		this(nombre);
-		this.precioHora=precioHora;
+		this.precioHora = precioHora;
 	}
 
 	public double getPrecioHora() {
@@ -75,14 +79,15 @@ public class TipoVehiculo {
 
 	@Override
 	public String toString() {
-		return "TipoVehiculo [nombre=" + nombre + ", precioHora=" + precioHora + "]";
+		return "TipoVehiculo [nombre=" + nombre + ", precioHora=" + precioHora
+				+ "]";
 	}
 
 	public Set<Vehiculo> getVehiculos() {
 		return new HashSet<>(vehiculos);
 	}
 
-	Set<Vehiculo>_getVehiculos() {
+	Set<Vehiculo> _getVehiculos() {
 		return vehiculos;
 	}
 

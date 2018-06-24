@@ -16,13 +16,9 @@ import uo.ri.conf.Factory;
 import uo.ri.util.exception.BusinessException;
 
 /**
- * Representa en la UI la acción a realizar para liquidar una factura cuyo ID se
- * pide por consola. Posteriormente se mostrarán todos los medios de pago
- * asociados al cliente de esa factura por pantalla, y se iran eligiendo cargos
- * a realizar en dichos medios de pago, hasta cubrir el total de la factura.
- * Entonces se procederá a su liquidación y a realizar los cargos
+ * Interacción con el usuario para la liquidacion de facturas
  * 
- * @author Guille
+ * @author José Antonio García García
  *
  */
 public class LiquidateInvoiceAction implements Action {
@@ -33,7 +29,7 @@ public class LiquidateInvoiceAction implements Action {
 	@Override
 	public void execute() throws Exception {
 		InvoiceDto factura = cs.findInvoiceByNumber(
-				Console.readLong("Introduce el nº de la factura: "));
+				Console.readLong("Numero de la factura: "));
 		if (factura == null)
 			throw new BusinessException("No existe");
 		else if (factura.status.equals("ABONADA"))
@@ -48,12 +44,10 @@ public class LiquidateInvoiceAction implements Action {
 	}
 
 	/**
-	 * Muestra por pantalla los medios de pago pasados por parámetro No se
-	 * recurrer a Printer porque es diferente la información que aqui queremos
-	 * mostrar a la que tendría sentido mostrar allí
+	 * Metodo auxiliar que muestra los metodos de pago disponibles para el 
+	 * cliente
 	 * 
-	 * @param mediosPago:
-	 *            los medios de pago a mostrar
+	 * @param mediosPago Medios de pago disponibles
 	 */
 	private void mostrarMediosPago(List<PaymentMeanDto> mediosPago) {
 		for (int i = 1; i <= mediosPago.size(); i++) {
@@ -63,11 +57,10 @@ public class LiquidateInvoiceAction implements Action {
 	}
 
 	/**
-	 * Devuelve información específica de un medio de pago
+	 * Metodo auxiliar que muestra la informacion de un medio de pago
 	 * 
-	 * @param medioPago:
-	 *            el medio de pago
-	 * @return la información específica
+	 * @param medioPago Medio de pago a mostrar
+	 * @return informacion del medio de pago parseada
 	 */
 	private String getInfoMedioPago(PaymentMeanDto medioPago) {
 		if (medioPago instanceof VoucherDto) {
@@ -85,31 +78,28 @@ public class LiquidateInvoiceAction implements Action {
 	}
 
 	/**
-	 * Entra en un bucle en el que va pidiendo al usuario realizar cargos sobre
-	 * sus medios de pago disponibles hasta completar el importe total de la
-	 * factura a liquidar
+	 * Metodo auxiliar que pide al usuario la distribucion del importe de la 
+	 * factura en funcion de los medios de pago mostrados previamente
 	 * 
-	 * @param factura:
-	 *            la factura que queremos liquidar
-	 * @return un mapa con los cargos realizados
+	 * @param factura Datos de la factura a liquidar
+	 * @return mapa con los medios de pago utilizados y el importe que se 
+	 * 			quiere sacar de cada uno de ellos
 	 */
 	private Map<Long, Double> bucleMediosPago(InvoiceDto factura) {
 		Map<Long, Double> cargos = new HashMap<>();
 		double restante = factura.total;
+		Console.printf("Importe de la factura: %.2f€\n", factura.total);
 		while (restante > 0.0) {
-			Console.printf("Importe de la factura: %.2f€\n", factura.total);
 			Console.printf("Falta por pagar: %.2f€\n", restante);
 			int medio = Console.readInt("-> Selecciona un método de pago");
 			while (medio <= 0 || medio > mediosPago.size()) {
-				Console.println(
-						"¡VAYA! Debes seleccionar un medio de pago válido");
+				Console.println("Selecciona un medio de pago valido");
 				medio = Console.readInt("-> Selecciona un método de pago ");
 			}
 			double cantidad = Round
 					.twoCents(Console.readDouble("-> Importe a cargar"));
 			while (!validar(medio, cantidad, restante, cargos)) {
-				Console.println(
-						"¡VAYA! El importe introducido no es válido. Por favor, introducelo de nuevo");
+				Console.println("Introduce un importe valido");
 				cantidad = Round
 						.twoCents(Console.readDouble("-> Importe a cargar"));
 			}
@@ -126,17 +116,14 @@ public class LiquidateInvoiceAction implements Action {
 	}
 
 	/**
-	 * Comprueba si es valido realizar cierto cargo a un medio de pago
+	 * Metodo auxiliar que comprueba si es valido realizar cierto cargo a un 
+	 * medio de pago
 	 * 
-	 * @param medio:
-	 *            el medio de pago
-	 * @param cantidadIntento:
-	 *            lo que le queremos cargar
-	 * @param cantidadRestante:
-	 *            lo que queda por pagar de factura
-	 * @param cargos:
-	 *            los cargos ya realizados
-	 * @return la respuesta
+	 * @param medio Medio de pago a comprobar
+	 * @param cantidadIntento Cantidad que se desea utilizar
+	 * @param cantidadRestante Importe restante de la factura
+	 * @param cargos Datos de los cargos que se han utilizado previamente
+	 * @return true si son validos los datos, false si no lo son
 	 */
 	private boolean validar(int medio, double cantidadIntento,
 			double cantidadRestante, Map<Long, Double> cargos) {

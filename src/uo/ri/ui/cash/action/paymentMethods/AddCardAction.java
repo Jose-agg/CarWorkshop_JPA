@@ -9,9 +9,9 @@ import uo.ri.business.dto.CardDto;
 import uo.ri.conf.Factory;
 
 /**
- * Interacción con el usuario para la acción de añadir una tarjeta de crédito
- * a la base de datos
- * @author yeahb
+ * Interacción con el usuario para la creacion de una nueva tarjeta
+ * 
+ * @author José Antonio García García
  *
  */
 public class AddCardAction implements Action {

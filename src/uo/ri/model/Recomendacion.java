@@ -10,28 +10,32 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="TRecomendaciones",
-uniqueConstraints= {
-		@UniqueConstraint(columnNames="RECOMENDADOR_ID, RECOMENDADO_ID")
-})
+@Table(name = "TRecomendaciones", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "RECOMENDADOR_ID, RECOMENDADO_ID") })
 public class Recomendacion {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 
-	@ManyToOne private Cliente recomendador;
-	@OneToOne private Cliente recomendado;
-	private boolean usada_bono=false;
+	@ManyToOne
+	private Cliente recomendador;
+	@OneToOne
+	private Cliente recomendado;
+	private boolean usada_bono = false;
 
-	Recomendacion(){};
+	Recomendacion() {
+	};
 
 	public Recomendacion(Cliente recomendador, Cliente recomendado) {
-		this.recomendador=recomendador;
-		this.recomendado=recomendado;
-		Association.Recomendar.link(this.recomendador,this.recomendado, this);
+		this.recomendador = recomendador;
+		this.recomendado = recomendado;
+		Association.Recomendar.link(this.recomendador, this.recomendado, this);
 	}
 
 	public Cliente getRecomendado() {
 		return recomendado;
 	}
+
 	void _setRecomendado(Cliente reco) {
 		this.recomendado = reco;
 	}
@@ -39,6 +43,7 @@ public class Recomendacion {
 	public Cliente getRecomendador() {
 		return recomendador;
 	}
+
 	void _setRecomendador(Cliente reco) {
 		this.recomendador = reco;
 	}
@@ -49,7 +54,7 @@ public class Recomendacion {
 	}
 
 	public void markAsUsadaBono() {
-		usada_bono=true;		
+		usada_bono = true;
 	}
 
 	public boolean getUsadaParaBono() {
@@ -64,8 +69,10 @@ public class Recomendacion {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((recomendado == null) ? 0 : recomendado.hashCode());
-		result = prime * result + ((recomendador == null) ? 0 : recomendador.hashCode());
+		result = prime * result
+				+ ((recomendado == null) ? 0 : recomendado.hashCode());
+		result = prime * result
+				+ ((recomendador == null) ? 0 : recomendador.hashCode());
 		return result;
 	}
 
@@ -90,7 +97,5 @@ public class Recomendacion {
 			return false;
 		return true;
 	}
-
-
 
 }

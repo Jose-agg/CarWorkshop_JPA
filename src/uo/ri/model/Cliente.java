@@ -17,29 +17,36 @@ import javax.persistence.Table;
 import uo.ri.model.types.Address;
 
 @Entity
-@Table(name="TClientes")
+@Table(name = "TClientes")
 public class Cliente {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 
-	@Column(unique=true) private String dni;
+	@Column(unique = true)
+	private String dni;
 	private String nombre;
 	private String apellidos;
 	private Address address;
 	private String email;
 	private String phone;
 
-	@OneToMany(mappedBy="cliente") private Set<Vehiculo> vehiculos = new HashSet<>();
-	@OneToMany(mappedBy="cliente") private Set<MedioPago> mediosPago = new HashSet<>();
+	@OneToMany(mappedBy = "cliente")
+	private Set<Vehiculo> vehiculos = new HashSet<>();
+	@OneToMany(mappedBy = "cliente")
+	private Set<MedioPago> mediosPago = new HashSet<>();
 
-	@OneToOne (mappedBy="recomendado")private Recomendacion recomendador;
-	@OneToMany(mappedBy="recomendador") private Set<Recomendacion> recomendaciones = new HashSet<>();
+	@OneToOne(mappedBy = "recomendado")
+	private Recomendacion recomendador;
+	@OneToMany(mappedBy = "recomendador")
+	private Set<Recomendacion> recomendaciones = new HashSet<>();
 
-	Cliente(){};
+	Cliente() {
+	};
 
 	public Cliente(String dni) {
 		this.dni = dni;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -144,9 +151,9 @@ public class Cliente {
 
 	public List<Averia> getAveriasBono3NoUsadas() {
 		List<Averia> averiasParaUsar = new ArrayList<Averia>();
-		for(Vehiculo vehiculo:vehiculos) {
-			for(Averia averia:vehiculo.getAverias()) {
-				if(averia.esElegibleParaBono3()) {
+		for (Vehiculo vehiculo : vehiculos) {
+			for (Averia averia : vehiculo.getAverias()) {
+				if (averia.esElegibleParaBono3()) {
 					averiasParaUsar.add(averia);
 				}
 			}
@@ -170,7 +177,6 @@ public class Cliente {
 		this.recomendador = reco;
 	}
 
-	
 	/**
 	 * Método que devuelve una lista con las recomendaciones válidas del cliente,
 	 * que podrán ser usadas para generar un bono.
@@ -178,16 +184,17 @@ public class Cliente {
 	 */
 	public List<Recomendacion> recomendacionesValidas() {
 		List<Recomendacion> listaRecos = new ArrayList<>();
-		for(Recomendacion recomendacion:recomendaciones) {
-			if(!recomendacion.getUsadaParaBono()) {
-				for(Vehiculo vehiculo:recomendacion.getRecomendado().getVehiculos()) {
-					if(vehiculo.getAverias().size()>0) {
+		for (Recomendacion recomendacion : recomendaciones) {
+			if (!recomendacion.getUsadaParaBono()) {
+				for (Vehiculo vehiculo : recomendacion.getRecomendado()
+						.getVehiculos()) {
+					if (vehiculo.getAverias().size() > 0) {
 						listaRecos.add(recomendacion);
 						break;
 					}
 
 				}
-			}		
+			}
 		}
 		return listaRecos;
 	}
@@ -199,18 +206,19 @@ public class Cliente {
 	 * @return Valor booleano indicando si puede recibir bono o no.
 	 */
 	public boolean elegibleBonoPorRecomendaciones() {
-		boolean recos=recomendaciones.size()>=3;
-		boolean reparacionPropia=false;
-		for(Vehiculo vehiculo:vehiculos) {
-			if(vehiculo.getAverias().size()>0) {
-				reparacionPropia=true;
+		boolean recos = recomendaciones.size() >= 3;
+		boolean reparacionPropia = false;
+		for (Vehiculo vehiculo : vehiculos) {
+			if (vehiculo.getAverias().size() > 0) {
+				reparacionPropia = true;
 				break;
 			}
 		}
 
-		return recos && reparacionPropia && recomendacionesValidas().size()>=3;
+		return recos && reparacionPropia
+				&& recomendacionesValidas().size() >= 3;
 	}
-	
+
 	/**
 	 * Método que devuelve el número de bonos que se generan para el cliente 
 	 * por recomendaciones. Comprueba que el cliente es válido y va recorriendo las recomendaciones
@@ -218,16 +226,17 @@ public class Cliente {
 	 * @return El número de bonos para el cliente
 	 */
 	public int generarBonos() {
-		if(elegibleBonoPorRecomendaciones()) {
-			int contador=recomendacionesValidas().size()/3;
-			int finaL=recomendacionesValidas().size()/3;
-			while(contador>0) {
-				int cont=0;
-					for(Recomendacion reco:recomendacionesValidas()) {
-						reco.markAsUsadaBono();
-						cont++;
-						if(cont==3) break;
-					}
+		if (elegibleBonoPorRecomendaciones()) {
+			int contador = recomendacionesValidas().size() / 3;
+			int finaL = recomendacionesValidas().size() / 3;
+			while (contador > 0) {
+				int cont = 0;
+				for (Recomendacion reco : recomendacionesValidas()) {
+					reco.markAsUsadaBono();
+					cont++;
+					if (cont == 3)
+						break;
+				}
 				contador--;
 			}
 			return finaL;

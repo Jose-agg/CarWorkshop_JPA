@@ -12,17 +12,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TRepuestos")
-public class Repuesto  {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id;
+@Table(name = "TRepuestos")
+public class Repuesto {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 
-	@Column(unique=true) private String codigo;
+	@Column(unique = true)
+	private String codigo;
 	private String descripcion;
 	private double precio;
 
-	@OneToMany(mappedBy="repuesto") private Set<Sustitucion> sustituciones = new HashSet<>();
+	@OneToMany(mappedBy = "repuesto")
+	private Set<Sustitucion> sustituciones = new HashSet<>();
 
-	Repuesto(){};
+	Repuesto() {
+	};
 
 	public Long getId() {
 		return id;
@@ -35,8 +40,8 @@ public class Repuesto  {
 
 	public Repuesto(String codigo, String descripcion, double precio) {
 		this(codigo);
-		this.descripcion=descripcion;
-		this.precio=precio;
+		this.descripcion = descripcion;
+		this.precio = precio;
 	}
 
 	public String getDescripcion() {
@@ -86,14 +91,13 @@ public class Repuesto  {
 
 	@Override
 	public String toString() {
-		return "Repuesto [codigo=" + codigo + ", descripcion=" + descripcion + ", precio=" + precio + "]";
+		return "Repuesto [codigo=" + codigo + ", descripcion=" + descripcion
+				+ ", precio=" + precio + "]";
 	}
-
 
 	public Set<Sustitucion> getSustituciones() {
-		return new HashSet<> (sustituciones);
+		return new HashSet<>(sustituciones);
 	}
-
 
 	Set<Sustitucion> _getSustituciones() {
 		return sustituciones;

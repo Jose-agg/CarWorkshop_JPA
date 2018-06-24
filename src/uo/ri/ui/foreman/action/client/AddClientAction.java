@@ -7,6 +7,12 @@ import uo.ri.business.dto.ClientDto;
 import uo.ri.conf.Factory;
 import uo.ri.util.exception.BusinessException;
 
+/**
+ * Interacción con el usuario para añadir un nuevo cliente al sistema
+ * 
+ * @author José Antonio García García
+ *
+ */
 public class AddClientAction implements Action {
 
 	@Override

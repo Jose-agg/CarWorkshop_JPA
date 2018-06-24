@@ -7,6 +7,13 @@ import uo.ri.business.dto.ClientDto;
 import uo.ri.conf.Factory;
 import uo.ri.util.exception.BusinessException;
 
+/**
+ * Interacción con el usuario para actualizar los datos de un cliente del 
+ * sistema
+ * 
+ * @author José Antonio García García
+ *
+ */
 public class UpdateClientAction implements Action {
 
 	@Override

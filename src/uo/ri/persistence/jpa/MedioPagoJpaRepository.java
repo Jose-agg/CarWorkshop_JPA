@@ -9,12 +9,6 @@ import uo.ri.model.TarjetaCredito;
 import uo.ri.persistence.jpa.util.BaseRepository;
 import uo.ri.persistence.jpa.util.Jpa;
 
-/**
- * Repositorio que realiza la persistencia con los elementos de tipo MedioPago
- * de la base de datos. Se resuelven métodos de consulta utilizando el mapeador JPA
- * @author yeahb
- *
- */
 public class MedioPagoJpaRepository extends BaseRepository<MedioPago>
 		implements MedioPagoRepository {
 
@@ -48,11 +42,11 @@ public class MedioPagoJpaRepository extends BaseRepository<MedioPago>
 	}
 
 	@Override
-	public TarjetaCredito findCreditCardByNumber(String pan) {
+	public TarjetaCredito findCreditCardByNumber(String numero) {
 		return Jpa.getManager()
 				.createNamedQuery("MedioPago.findCreditCardByNumber",
 						TarjetaCredito.class)
-				.setParameter(1, pan).getResultList().stream().findFirst()
+				.setParameter(1, numero).getResultList().stream().findFirst()
 				.orElse(null);
 	}
 

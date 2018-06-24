@@ -8,6 +8,13 @@ import uo.ri.conf.Factory;
 import uo.ri.ui.util.Printer;
 import uo.ri.util.exception.BusinessException;
 
+/**
+ * Interacción con el usuario para buscar los datos de un cliente del 
+ * sistema
+ * 
+ * @author José Antonio García García
+ *
+ */
 public class FindClientByIdAction implements Action {
 
 	@Override
