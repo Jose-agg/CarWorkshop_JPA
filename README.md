@@ -14,4 +14,4 @@ Se ha utilizado un mapeador OR porque une caracterisiticas de las bases de datos
 
 # Mapeo del sistema #
 
-![mapeo](https://github.com/MrKarrter/CarWorkshop_JDBC/blob/master/Diagrama%20Tablas.png)
+![mapeo](https://github.com/MrKarrter/CarWorkshop_JPA/blob/master/Diagrama%20Tablas.png)
